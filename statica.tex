@@ -1,0 +1,131 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[italian]{babel}
+\usepackage{amsmath, amssymb}
+\renewcommand{\div}{\mathrm{div}}
+\newcommand{\rot}{\mathrm{div}}
+
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+\author{Tommaso Brusco}
+\title{Formule di elettro- e magnetostatica}
+\date{\today}
+
+\begin{document}
+	\maketitle
+
+	\section{Equazioni di Maxwell}
+	\label{maxwell}
+	\begin{table}[h!]
+		\centering
+		\label{tab:maxwell}
+		\begin{tabular}{ccc}
+			$\div\vec{E}=4\pi\rho$ & $\rot\vec{E}=0$ & $\vec{E} = -\nabla V $\\[5pt]
+			$\div\vec{B}=0$ & $\rot\vec{B}=\frac{4\pi}{c}\vec{J}$ & $\vec{B}=\rot\vec{A}$\\
+		\end{tabular}
+	\end{table}
+
+	$$\vec{F} = q\left(\vec{E}+\frac{\vec{v}}{c}\times\vec{B}\right)$$
+
+	\section{Risolvere Poisson o Laplace}
+	\label{poislap}
+	\subsection{Funzione di Green}
+	$$V\left(\vec{r}  \right) = \int dr'^3 \rho\left( \vec{r}\,' \right) G\left( \vec{r}, \vec{r}\,' \right) - \frac{1}{4\pi}\oint _S \left( V \frac{\partial G}{\partial u} - G \frac{\partial V}{\partial u} \right) $$
+	Per il piano:
+	$$G\left( \vec{r}, \vec{r}\,' \right) = \frac{1}{|\vec{r} - \vec{r}\,'|} - \frac{1}{|\vec{r} + \vec{r}\,'|}$$
+
+Per la sfera (raggio $a$):
+	$$G\left( \vec{r}, \vec{r}\,' \right) = \frac{1}{|\vec{r} - \vec{r}\,'|} - \frac{a}{r'} \frac{1}{|\vec{r} - \frac{a^2}{r'} \vec{r}\,'|}$$
+
+	\subsection{Polinomi di Legendre}
+	$$V\left( r, \theta \right) = \sum_{l=0}^{\infty} \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) P_l\left( \cos\theta \right) $$
+	$$P_0 = 1 \quad P_1 = \cos\theta \quad P_2 = \frac{1}{2}\left( 3\cos ^2 \theta - 1 \right) \quad P_l\left( -x \right) = \left( -1 \right) ^l P_l \left( x \right) $$
+
+	Normalizzazione: $\int_{-1}^1 P_{l'}\left( x \right) P_l\left( x \right) = \frac{2}{2l+1}\delta _{l, l'}$
+	$$\frac{1}{|\vec{r} - \vec{r}\,'|} = \sum_{l=0}^{\infty} \frac{r _< ^l}{r _> ^{l+1}} P_l \left( \cos\theta \right) $$
+
+
+	\subsection{Armoniche sferiche}
+	$$V\left( r, \theta, \phi \right) = \sum_{l=0}^{\infty} \sum_{m=-l}^{l} \left( A_{l,m} r^l + B_{l,m} \frac{1}{r^{l+1}} \right) Y_{l,m}\left( \theta, \phi \right) $$
+
+	Lo sviluppo in multipoli di una distribuzione $\rho\left( \vec{r}\,' \right) $ limitata 
+	a grande distanza dall'origine è:
+
+	$$V\left( \vec{r} \right) = \sum_{l=0}^{\infty} \sum_{m=-l}^{l} C_{l,m} \frac{Y_{l,m}\left( \theta, \phi \right) }{r^{l+1}}$$
+
+	con $C_{l,m} = \int dr'^3 r'^l \rho\left( \vec{r}\,' \right) Y*_{l,m}\left( \theta, \phi \right) $. 
+	Similmente vicino all'origine.
+	Le prime armoniche sferiche sono:
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{c|cccc}
+		 & 0 & 1 & 2 & 3 \\
+		 \hline\\[5pt]
+		0 & $\frac{1}{2}\sqrt{\frac{1}{\pi}} $ & $\frac{1}{2}\sqrt{\frac{3}{\pi}} \cos\theta$ & $\frac{1}{4}\sqrt{\frac{5}{\pi}}\left( 3\cos ^2 \theta - 1 \right) $ & $\frac{1}{4}\sqrt{\frac{7}{\pi}}\left( 5\cos ^3 \theta - 3\cos\theta \right) $ \\[10pt]
+		1 & & $-\frac{1}{2}\sqrt{\frac{3}{2\pi}}e^{\mathrm{i}\phi}\sin\theta$ & $-\frac{1}{2}\sqrt{\frac{15}{2\pi}} e^{\mathrm{i}\phi}\cos\theta\sin\theta$ & $-\frac{1}{8}\sqrt{\frac{21}{2\pi}}e^{\mathrm{i}\phi}\sin\theta\left( 5\cos ^2 \theta - 1 \right) $ \\[10pt]
+		2 & & & $\frac{1}{4}\sqrt{\frac{15}{2\pi}} e^{2\mathrm{i}\phi}\sin ^2 \theta $ & $\frac{1}{4}\sqrt{\frac{105}{2\pi}}e^{2\mathrm{i}\phi}\sin ^2 \theta \cos\theta$ \\[10pt]
+		3 & & & & $-\frac{1}{8}\sqrt{\frac{35}{\pi}}e^{3\mathrm{i}\phi}\sin ^3 \theta$ \\[10pt]
+
+		\end{tabular}
+	\end{table}
+
+	\section{Biot-Savart e altro magnetismo}
+	\label{bs}
+	Se la distribuzione di corrente è localizzata
+	$$\vec{B} = \frac{1}{c}\int dr'^3 \frac{\vec{J}\times\left( \vec{r} - \vec{r}\,' \right) }{|\vec{r}-\vec{r}\,'|^3} \quad \vec{A}=\frac{1}{c}\int dr'^3 \frac{\vec{J}\left( \vec{r}\,' \right) }{|\vec{r}-\vec{r}\,'|}$$
+
+	\subsection{Multipoli magnetici}
+	$$\vec{A} = \frac{1}{rc}\int dr'^3 \vec{J}\left( \vec{r}\,' \right) \left( 1+\frac{\vec{r}\cdot\vec{r}\,'}{r^2} \right) + \frac{1}{r^3 c}\int dr'^3 \vec{J}\left( \vec{r}\,' \right) \left( x x' + y y' + z z' \right) $$
+
+	\section{Dipoli e altri cazzilli}
+	\label{dip}
+	Si indica con $\vec{p}$ il dipolo elettrico, con $\vec{m}$ quello magnetico e 
+	con $\vec{s}$ uno qualsiasi dei due. Inoltre si indica con $\vec{G}$ un campo qualsiasi 
+	(elettrico o magnetico).
+
+	$$\vec{G} = \frac{3\vec{r}\left(\vec{s}\cdot\vec{r} \right) - r^2 \vec{s}}{r^5}$$
+
+	$$\vec{F} = \left( \vec{p}\cdot\vec{\nabla} \right) \vec{E} \quad U = -\vec{p}\cdot\vec{E}\quad U=\frac{1}{8\pi}\int|\vec{E} |^2 dr^3$$
+
+	$$\vec{m}=\frac{1}{2c}\int dr^3 \vec{r} \times \vec{J} \quad \vec{A} = \frac{\vec{m} \times \vec{r}}{r^3} \quad \vec{\tau} = \vec{m}\times\vec{B} \quad \vec{F}=\vec{\nabla }\left( \vec{m}\cdot\vec{B} \right) $$
+
+	\section{Operatori differenziali}
+	\label{diff}
+	\subsection{Gradiente}
+	$$\left( \frac{\partial f}{\partial \rho} , \frac{1}{\rho} \frac{\partial f}{\partial \phi} , \frac{\partial f}{\partial z} \right)$$
+
+	$$\left( \frac{\partial f}{\partial \rho} , \frac{1}{\rho}\frac{\partial f}{\partial \theta} , \frac{1}{\rho\sin\theta}\frac{\partial f}{\partial \phi}\right)$$
+
+	\subsection{Divergenza}
+	$$\frac{1}{\rho}\frac{\partial \left(\rho F_{\rho}\right)}{\partial \rho} + \frac{1}{\rho}\frac{\partial F_{\phi}}{\partial \phi} + \frac{\partial F_{z}}{\partial z}$$
+
+	$$\frac{1}{\rho^2}\frac{\partial \left(\rho^2 F_{\rho}\right)}{\partial r} + \frac{1}{\rho\sin\theta}\frac{\partial \left(\sin\theta F_{\theta}\right)}{\partial \theta} + \frac{1}{\rho\sin\theta}\frac{\partial F_{\phi}}{\partial \phi}$$
+
+
+	\subsection{Rotore}
+	$$\left( \frac{1}{\rho}\frac{\partial F_{z}}{\partial \phi}-\frac{\partial F_{\phi}}{\partial z} , \frac{\partial F_{\rho}}{\partial z}-\frac{\partial F_{z}}{\partial \rho} , \frac{1}{\rho}\left( \frac{\partial \left(\rho F_{\phi}\right)}{\partial \rho}-\frac{\partial F_{\rho}}{\partial \phi} \right)  \right) $$
+
+	$$\left( \frac{1}{\rho\sin\theta}\left(\frac{\partial \left( \sin\theta F_{\phi}\right) }{\partial \theta}-\frac{\partial F_{\theta}}{\partial \phi}\right) , \frac{1}{\rho}\left( \frac{1}{\sin\theta}\frac{\partial F_{\rho}}{\partial \phi}-\frac{\partial \left( \rho F_{\phi} \right) }{\partial \rho} \right) , \frac{1}{\rho}\left( \frac{\partial \left( \rho F_{\theta} \right) }{\partial \rho}-\frac{\partial F_{\rho}}{\partial \theta} \right)  \right) $$
+
+	\subsection{Laplaciano}
+	$$\frac{1}{\rho}\frac{\partial }{\partial \rho}\left( \rho \frac{\partial f}{\partial \rho} \right) + \frac{1}{\rho^2}\frac{\partial ^2 f}{\partial \phi ^2} + \frac{\partial ^2 f}{\partial z^2}$$
+
+	$$\frac{1}{\rho^2}\frac{\partial }{\partial \rho} \left( \rho^2 \frac{\partial f}{\partial \rho} \right) + \frac{1}{\rho^2 \sin\theta}\frac{\partial }{\partial \theta}\left( \sin\theta \frac{\partial f}{\partial \theta}\right) + \frac{1}{\rho ^2 \sin ^2 \theta}\frac{\partial ^ f}{\partial \phi ^2}$$
+
+
+\end{document}

@@ -6,7 +6,8 @@
 \usepackage[italian]{babel}
 \usepackage{amsmath, amssymb}
 \renewcommand{\div}{\mathrm{div}}
-\newcommand{\rot}{\mathrm{div}}
+\newcommand{\rot}{\mathrm{rot}}
+\usepackage[]{adjustbox}
 
 
 % figure support
@@ -49,8 +50,8 @@
 	Per il piano:
 	$$G\left( \vec{r}, \vec{r}\,' \right) = \frac{1}{|\vec{r} - \vec{r}\,'|} - \frac{1}{|\vec{r} + \vec{r}\,'|}$$
 
-Per la sfera (raggio $a$):
-	$$G\left( \vec{r}, \vec{r}\,' \right) = \frac{1}{|\vec{r} - \vec{r}\,'|} - \frac{a}{r'} \frac{1}{|\vec{r} - \frac{a^2}{r'} \vec{r}\,'|}$$
+	Per la sfera (raggio $a$):
+	$$G\left( \vec{r}, \vec{r}\,' \right) = \frac{1}{|\vec{r} - \vec{r}\,'|} - \frac{a}{r'} \frac{1}{|\vec{r} - \frac{a^2}{r'^2} \vec{r}\,'|}$$
 
 	\subsection{Polinomi di Legendre}
 	$$V\left( r, \theta \right) = \sum_{l=0}^{\infty} \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) P_l\left( \cos\theta \right) $$
@@ -72,16 +73,18 @@ Per la sfera (raggio $a$):
 	Similmente vicino all'origine.
 	Le prime armoniche sferiche sono:
 	\begin{table}[h!]
+		\adjustbox{max width=\textwidth}{%
 		\centering
 		\begin{tabular}{c|cccc}
 		 & 0 & 1 & 2 & 3 \\
-		 \hline\\[5pt]
+		 \hline\\[3pt]
 		0 & $\frac{1}{2}\sqrt{\frac{1}{\pi}} $ & $\frac{1}{2}\sqrt{\frac{3}{\pi}} \cos\theta$ & $\frac{1}{4}\sqrt{\frac{5}{\pi}}\left( 3\cos ^2 \theta - 1 \right) $ & $\frac{1}{4}\sqrt{\frac{7}{\pi}}\left( 5\cos ^3 \theta - 3\cos\theta \right) $ \\[10pt]
 		1 & & $-\frac{1}{2}\sqrt{\frac{3}{2\pi}}e^{\mathrm{i}\phi}\sin\theta$ & $-\frac{1}{2}\sqrt{\frac{15}{2\pi}} e^{\mathrm{i}\phi}\cos\theta\sin\theta$ & $-\frac{1}{8}\sqrt{\frac{21}{2\pi}}e^{\mathrm{i}\phi}\sin\theta\left( 5\cos ^2 \theta - 1 \right) $ \\[10pt]
 		2 & & & $\frac{1}{4}\sqrt{\frac{15}{2\pi}} e^{2\mathrm{i}\phi}\sin ^2 \theta $ & $\frac{1}{4}\sqrt{\frac{105}{2\pi}}e^{2\mathrm{i}\phi}\sin ^2 \theta \cos\theta$ \\[10pt]
 		3 & & & & $-\frac{1}{8}\sqrt{\frac{35}{\pi}}e^{3\mathrm{i}\phi}\sin ^3 \theta$ \\[10pt]
 
 		\end{tabular}
+		}
 	\end{table}
 
 	\section{Biot-Savart e altro magnetismo}
